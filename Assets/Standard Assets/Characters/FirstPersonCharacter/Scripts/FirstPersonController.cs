@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using System.Collections.Generic;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -42,6 +43,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        //NEW CODE
+        public bool playStory;  //should we play the narration?
+        private int counter;    //how many points of interest has the player interacted with?
+        public int totalPoints;  //how many points of interest are there?
+
+        [Header("Story Lines")]  //add a header to this section
+        [TextArea(2, 10)]  //display the list of strings that follows as text areas, with a min or 2 lines & a max of 10 lines for the text
+        public List<string> captions;  //Lists for closed captioning
+
+        public AudioClip[] lines;
+
         // Use this for initialization
         private void Start()
         {
@@ -55,6 +67,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+
+            //NEW CODE
+            playStory = false;
+            counter = 0;
+            totalPoints = 2;
         }
 
 
@@ -256,9 +273,28 @@ namespace UnityStandardAssets.Characters.FirstPerson
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
 
+        //NEW CODE
         private void OnTriggerEnter(Collider other) {
             if (other.tag == "event") {
+                counter++;
                 Debug.Log("entered");
+                ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
+                if (parti.isPlaying) {
+                    playStory = true;   //SOUND
+                    parti.Stop();
+                    Debug.Log("parti OVER");
+                }
+                if (playStory == true) {
+                    int randomLine = Random.Range(0, lines.Length);
+                    Debug.Log(randomLine);
+                    m_AudioSource.PlayOneShot(lines[randomLine]);
+                    Debug.Log("sound would be playing rn i promise fam");
+                    playStory = false;
+                }
+                if (counter == totalPoints) {
+                    //put an IEnumerator here to count down to game over?
+                    Debug.Log("the game is over fam sry u had to ifnd out this way");
+                }
             }
         }
     }
