@@ -43,16 +43,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
-        //NEW CODE
-        public bool playStory;  //should we play the narration?
-        private int counter;    //how many points of interest has the player interacted with?
-        public int totalPoints;  //how many points of interest are there?
+        ////NEW CODE
+        //public bool playStory;  //should we play the narration?
+        //private int counter;    //how many points of interest has the player interacted with?
+        //public int totalPoints;  //how many points of interest are there?
+        //private bool gameOver;
+        //public GameObject finalEventObj;    //reference to the final event object, so we can get it to play particles when game is over
+        //private bool[] neverEntered = new bool[2];  //have you entered this tree before m8
 
-        [Header("Story Lines")]  //add a header to this section
-        [TextArea(2, 10)]  //display the list of strings that follows as text areas, with a min or 2 lines & a max of 10 lines for the text
-        public List<string> captions;  //Lists for closed captioning
+        //[Header("Story Lines")]  //add a header to this section
+        //[TextArea(2, 10)]  //display the list of strings that follows as text areas, with a min or 2 lines & a max of 10 lines for the text
+        //public List<string> captions;  //Lists for closed captioning
 
-        public AudioClip[] lines;
+        //public AudioClip[] lines;
 
         // Use this for initialization
         private void Start()
@@ -68,10 +71,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
 
-            //NEW CODE
-            playStory = false;
-            counter = 0;
-            totalPoints = 2;
+            ////NEW CODE
+            //playStory = false;
+            //counter = 0;
+            //totalPoints = 2;
+            //gameOver = false;
+            //for (int i = 0; i < totalPoints; i++) {
+            //    neverEntered[i] = true;
+            //}
         }
 
 
@@ -274,28 +281,47 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
         //NEW CODE
-        private void OnTriggerEnter(Collider other) {
-            if (other.tag == "event") {
-                counter++;
-                Debug.Log("entered");
-                ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
-                if (parti.isPlaying) {
-                    playStory = true;   //SOUND
-                    parti.Stop();
-                    Debug.Log("parti OVER");
-                }
-                if (playStory == true) {
-                    int randomLine = Random.Range(0, lines.Length);
-                    Debug.Log(randomLine);
-                    m_AudioSource.PlayOneShot(lines[randomLine]);
-                    Debug.Log("sound would be playing rn i promise fam");
-                    playStory = false;
-                }
-                if (counter == totalPoints) {
-                    //put an IEnumerator here to count down to game over?
-                    Debug.Log("the game is over fam sry u had to ifnd out this way");
-                }
-            }
-        }
+        //private void OnTriggerEnter(Collider other) {
+        //    if (other.tag == "event") {
+        //        ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
+        //        if (neverEntered[counter] == true) {
+        //            Debug.Log("entered");
+        //            neverEntered[counter] = false;
+        //            counter++;
+        //            Debug.Log(neverEntered[counter]);
+        //            playStory = true;   //SOUND
+
+        //            if (parti.isPlaying) {
+        //                parti.Stop();
+        //                Debug.Log("parti OVER");
+        //            }
+
+        //            if (playStory == true) {
+        //                int randomLine = Random.Range(0, lines.Length);
+        //                //Debug.Log(randomLine);
+        //                m_AudioSource.PlayOneShot(lines[randomLine]);
+        //                //Debug.Log("sound would be playing rn i promise fam");
+        //                playStory = false;
+        //            }
+        //        }
+                
+        //        if (counter == totalPoints) {
+        //            //put an IEnumerator here to count down to game over?
+        //            Debug.Log("the game is over fam sry u had to ifnd out this way");
+        //            gameOver = true;
+        //            ParticleSystem lastParti = finalEventObj.GetComponentInChildren<ParticleSystem>();
+        //            if (lastParti.isStopped) {
+        //                lastParti.Play();
+        //            }
+        //        }
+        //    }
+        //    if (other.tag == "finalEvent") {
+        //        if (gameOver == true) {
+        //            //do a fancy game over thing here I guess
+        //            Debug.Log("you did it!");
+        //            //run the main scene again to replay
+        //        }
+        //    }
+        //}
     }
 }
