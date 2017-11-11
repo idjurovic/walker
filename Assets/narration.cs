@@ -41,7 +41,7 @@ public class narration : MonoBehaviour {
         if (other.tag == "Player") {
             Debug.Log("Detected player entry on " + gameObject.name);
 
-            ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
+            ParticleSystem parti = gameObject.GetComponentInChildren<ParticleSystem>();
             if (neverEntered) {
                 Debug.Log("entered");
                 neverEntered = false;
