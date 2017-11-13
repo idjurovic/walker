@@ -44,6 +44,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
 
         ////NEW CODE
+        public List<AudioClip> lines = new List<AudioClip>();
+        private List<int> lineSelect = new List<int>();
+        public bool playStory;
+        //private int randomLine;
         //public bool playStory;  //should we play the narration?
         //private int counter;    //how many points of interest has the player interacted with?
         //public int totalPoints;  //how many points of interest are there?
@@ -79,6 +83,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             //for (int i = 0; i < totalPoints; i++) {
             //    neverEntered[i] = true;
             //}
+            playStory = false;
+            for (int i = 0; i < lines.Count; i++) {
+                lineSelect.Add(i);
+            }
         }
 
 
@@ -282,58 +290,83 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         //NEW CODE
 
-        private void OnTriggerEnter(Collider other) {
-            if (other.tag == "event") {
-                NewNarration narrationScript = other.GetComponent<NewNarration>();
-                bool justEntered = other.GetComponent<NewNarration>().neverEntered;
-                if (justEntered == true) {
-                    //do the random line select here
-                    //remove the audio parts from the newnarration script
-                }
-            }
-        }
-
         //private void OnTriggerEnter(Collider other) {
         //    if (other.tag == "event") {
-        //        ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
-        //        if (neverEntered[counter] == true) {
-        //            Debug.Log("entered");
-        //            neverEntered[counter] = false;
-        //            counter++;
-        //            Debug.Log(neverEntered[counter]);
-        //            playStory = true;   //SOUND
-
-        //            if (parti.isPlaying) {
-        //                parti.Stop();
-        //                Debug.Log("parti OVER");
-        //            }
-
-        //            if (playStory == true) {
-        //                int randomLine = Random.Range(0, lines.Length);
-        //                //Debug.Log(randomLine);
-        //                m_AudioSource.PlayOneShot(lines[randomLine]);
-        //                //Debug.Log("sound would be playing rn i promise fam");
-        //                playStory = false;
-        //            }
-        //        }
-
-        //        if (counter == totalPoints) {
-        //            //put an IEnumerator here to count down to game over?
-        //            Debug.Log("the game is over fam sry u had to ifnd out this way");
-        //            gameOver = true;
-        //            ParticleSystem lastParti = finalEventObj.GetComponentInChildren<ParticleSystem>();
-        //            if (lastParti.isStopped) {
-        //                lastParti.Play();
-        //            }
-        //        }
-        //    }
-        //    if (other.tag == "finalEvent") {
-        //        if (gameOver == true) {
-        //            //do a fancy game over thing here I guess
-        //            Debug.Log("you did it!");
-        //            //run the main scene again to replay
+        //        NewNarration narrationScript = other.GetComponent<NewNarration>();
+        //        bool justEntered = other.GetComponent<NewNarration>().neverEntered;
+        //        if (justEntered == true) {
+        //            //do the random line select here
+        //            //remove the audio parts from the newnarration script
+        //            //playStory here?
+        //            int randomLine = Random.Range(0, lineSelect.Count);
+        //            Debug.Log(randomLine);
+        //            lineSelect.RemoveAt(randomLine);
+        //            m_AudioSource.PlayOneShot(lines[randomLine]);
         //        }
         //    }
         //}
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.tag == "event") {
+                //NewNarration narrationScript = other.GetComponent<NewNarration>();
+                bool justEntered = other.GetComponent<NewNarration>().neverEntered;
+                if (justEntered == false) {
+                    //do the random line select here
+                    //remove the audio parts from the newnarration script
+                    playStory = true;
+                    if (playStory == true) {
+                        int lineSelectIndex = Random.Range(0, lineSelect.Count);
+                        Debug.Log(lineSelectIndex);
+                        int randomLine = lineSelect[lineSelectIndex];
+                        m_AudioSource.PlayOneShot(lines[randomLine]);
+
+                        lineSelect.RemoveAt(lineSelectIndex);
+                        lineSelect.Remove(lineSelectIndex);
+
+                        playStory = false;
+                    }
+                }
+            }
+            //    if (other.tag == "event") {
+            //        ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
+            //        if (neverEntered[counter] == true) {
+            //            Debug.Log("entered");
+            //            neverEntered[counter] = false;
+            //            counter++;
+            //            Debug.Log(neverEntered[counter]);
+            //            playStory = true;   //SOUND
+
+            //            if (parti.isPlaying) {
+            //                parti.Stop();
+            //                Debug.Log("parti OVER");
+            //            }
+
+            //            if (playStory == true) {
+            //                int randomLine = Random.Range(0, lines.Length);
+            //                //Debug.Log(randomLine);
+            //                m_AudioSource.PlayOneShot(lines[randomLine]);
+            //                //Debug.Log("sound would be playing rn i promise fam");
+            //                playStory = false;
+            //            }
+            //        }
+
+            //        if (counter == totalPoints) {
+            //            //put an IEnumerator here to count down to game over?
+            //            Debug.Log("the game is over fam sry u had to ifnd out this way");
+            //            gameOver = true;
+            //            ParticleSystem lastParti = finalEventObj.GetComponentInChildren<ParticleSystem>();
+            //            if (lastParti.isStopped) {
+            //                lastParti.Play();
+            //            }
+            //        }
+            //    }
+            //    if (other.tag == "finalEvent") {
+            //        if (gameOver == true) {
+            //            //do a fancy game over thing here I guess
+            //            Debug.Log("you did it!");
+            //            //run the main scene again to replay
+            //        }
+            //    }
+        }
     }
 }

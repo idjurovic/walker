@@ -51,24 +51,24 @@ public class NewNarration : MonoBehaviour {
                 //Debug.Log("entered");
                 neverEntered = false;
                 counter++;
-                playStory = true;   //SOUND
+                //playStory = true;   //SOUND
 
                 if (parti.isPlaying) {
                     parti.Stop();
                     //Debug.Log("parti OVER");
                 }
 
-                if (playStory == true) {
-                    lineSelectIndex = Random.Range(0, lines.Count); //get a random line from the list
-                    Debug.Log(lineSelectIndex);
-                    //randomLine = lineSelect[lineSelectIndex];
+                //if (playStory == true) {
+                //    lineSelectIndex = Random.Range(0, lines.Count); //get a random line from the list
+                //    Debug.Log(lineSelectIndex);
+                //    //randomLine = lineSelect[lineSelectIndex];
 
-                    lines.Remove(lines[lineSelectIndex]);
-                    audioSrc.PlayOneShot(lines[lineSelectIndex]);
-                    //lineSelect.Remove(randomLine);
+                //    lines.Remove(lines[lineSelectIndex]);
+                //    audioSrc.PlayOneShot(lines[lineSelectIndex]);
+                //    //lineSelect.Remove(randomLine);
 
-                    playStory = false;
-                }
+                //    playStory = false;
+                //}
             }
 
             if (counter == totalPoints) {
