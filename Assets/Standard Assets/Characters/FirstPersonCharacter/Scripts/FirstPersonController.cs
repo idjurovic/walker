@@ -284,8 +284,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void OnTriggerEnter(Collider other) {
             if (other.tag == "event") {
-                //Narration narrationScript = other.GetComponent<Narration>();
-                //bool entered = other.GetComponent<narration>().neverEntered;
+                NewNarration narrationScript = other.GetComponent<NewNarration>();
+                bool justEntered = other.GetComponent<NewNarration>().neverEntered;
+                if (justEntered == true) {
+                    //do the random line select here
+                    //remove the audio parts from the newnarration script
+                }
             }
         }
 
