@@ -281,6 +281,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
         //NEW CODE
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.tag == "event") {
+                //Narration narrationScript = other.GetComponent<Narration>();
+                //bool entered = other.GetComponent<narration>().neverEntered;
+            }
+        }
+
         //private void OnTriggerEnter(Collider other) {
         //    if (other.tag == "event") {
         //        ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
@@ -304,7 +312,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         //                playStory = false;
         //            }
         //        }
-                
+
         //        if (counter == totalPoints) {
         //            //put an IEnumerator here to count down to game over?
         //            Debug.Log("the game is over fam sry u had to ifnd out this way");
