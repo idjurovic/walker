@@ -44,9 +44,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
 
         ////NEW CODE
-        public List<AudioClip> lines = new List<AudioClip>();
-        private List<int> lineSelect = new List<int>();
-        public bool playStory;
+//        public List<AudioClip> lines = new List<AudioClip>();
+//        private List<int> lineSelect = new List<int>();
+//        public bool playStory;
         //private int randomLine;
         //public bool playStory;  //should we play the narration?
         //private int counter;    //how many points of interest has the player interacted with?
@@ -83,10 +83,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             //for (int i = 0; i < totalPoints; i++) {
             //    neverEntered[i] = true;
             //}
-            playStory = false;
-            for (int i = 0; i < lines.Count; i++) {
-                lineSelect.Add(i);
-            }
+//            playStory = false;
+//            for (int i = 0; i < lines.Count; i++) {
+//                lineSelect.Add(i);
+//            }
         }
 
 
@@ -306,27 +306,31 @@ namespace UnityStandardAssets.Characters.FirstPerson
         //    }
         //}
 
-        private void OnTriggerEnter(Collider other) {
-            if (other.tag == "event") {
-                //NewNarration narrationScript = other.GetComponent<NewNarration>();
-                bool justEntered = other.GetComponent<NewNarration>().neverEntered;
-                if (justEntered == false) {
-                    //do the random line select here
-                    //remove the audio parts from the newnarration script
-                    playStory = true;
-                    if (playStory == true) {
-                        int lineSelectIndex = Random.Range(0, lineSelect.Count);
-                        Debug.Log(lineSelectIndex);
-                        int randomLine = lineSelect[lineSelectIndex];
-                        m_AudioSource.PlayOneShot(lines[randomLine]);
-
-                        lineSelect.RemoveAt(lineSelectIndex);
-                        lineSelect.Remove(lineSelectIndex);
-
-                        playStory = false;
-                    }
-                }
-            }
+//        private void OnTriggerEnter(Collider other) {
+//            if (other.tag == "event") {
+//                //NewNarration narrationScript = other.GetComponent<NewNarration>();
+//				bool justEntered = other.gameObject.GetComponent<NewNarration>().neverEntered;
+//                if (justEntered == true) {
+//					Debug.Log ("we haven't entered it so now play the sound");
+//					other.gameObject.GetComponent<NewNarration> ().neverEntered = false;
+//                    //do the random line select here
+//                    //remove the audio parts from the newnarration script
+//                    playStory = true;
+//                    if (playStory == true) {
+//						if (lineSelect.Count > 0) {
+//							int lineSelectIndex = Random.Range (0, lineSelect.Count);
+//							Debug.Log ("line to play: " + lineSelectIndex);
+//							int randomLine = lineSelect [lineSelectIndex];
+//							m_AudioSource.PlayOneShot (lines [randomLine]);
+//
+//							lineSelect.RemoveAt (lineSelectIndex);
+////                        lineSelect.Remove(lineSelectIndex);
+//
+//							playStory = false;
+//						}
+//                    }
+//                }
+//            }
             //    if (other.tag == "event") {
             //        ParticleSystem parti = other.GetComponentInChildren<ParticleSystem>();
             //        if (neverEntered[counter] == true) {
@@ -367,6 +371,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             //            //run the main scene again to replay
             //        }
             //    }
-        }
+//        }
     }
 }
